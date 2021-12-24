@@ -1,0 +1,106 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+        int co;
+        int ex;
+        struct node* next;
+}*a,*n,*t,*head1,*head2,*temp1,*temp2;
+struct node* head=NULL;
+struct node* tail=NULL;
+struct node*  create(struct node* head)
+{
+        int coe,exp,c;
+        do
+        {
+
+                n=(struct node*)malloc(sizeof(struct node));
+                printf("enter the coefficient and exponent\n");
+                scanf("%d",&coe);
+                scanf("%d",&exp);
+                n->co=coe;
+                n->ex=exp;
+                n->next=NULL;
+                if(head==NULL)
+                {
+                        head=n;
+                        tail=n;
+                }
+                else
+                {
+                        tail->next=n;
+                        tail=n;
+                }
+                printf(" to continue enter (1) or to end enter (0)\n");
+                fflush(stdin);
+                scanf("%d",&c);
+        }while(c==1);
+        return head;
+}
+void display(struct node* head)
+{
+        struct node* t;
+        t=head;
+        while(t->next!=NULL)
+        {
+                printf("%dX^%d+",t->co,t->ex);
+                t=t->next;
+        }
+        printf("%dX^%d",t->co,t->ex);
+}
+void add_poly(struct node* head1,struct node* head2)
+{
+        printf("the addition is:");
+        temp1=head1;
+        temp2=head2;
+        while(temp1&&temp2)
+        {
+                if(temp1->ex==temp2->ex)
+                {
+                        printf("+%dX^%d",temp1->co+temp2->co,temp1->ex);
+                        temp1=temp1->next;
+                        temp2=temp2->next;
+                }
+                else if(temp1->ex>temp2->ex)
+                {
+                        printf("+%dX^%d",temp1->co,temp1->ex);
+                        temp1=temp1->next;
+                }
+                else
+                {
+                        printf("+%dX^%d",temp2->co,temp2->ex);
+                        temp2=temp2->next;
+                }
+        }
+        if(temp1==NULL)
+        {
+                while(temp2!=NULL)
+                {
+                        printf("+%dX^%d",temp2->co,temp2->ex);
+                        temp2=temp2->next;
+
+                }
+        }
+        else
+        {
+                while(temp1!=NULL)
+                {
+                        printf("+%dX^%d",temp1->co,temp1->ex);
+                        temp1=temp1->next;
+                }
+        }
+}
+void main()
+{
+        struct node  *a,*b;
+        struct node* head1=NULL;
+        struct node* head2=NULL;
+        a=create(head1);
+        printf("the polynomial 1 is:");
+        display(a);
+        b=create(head2);
+        printf("the second polynomial is:");
+        display(b);
+        add_poly(a,b);
+}
+
